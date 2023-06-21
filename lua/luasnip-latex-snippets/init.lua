@@ -41,6 +41,8 @@ M.setup = function(opts)
 
   ls.add_snippets("tex", math_i, { default_priority = 0 })
 
+  ls.add_snippets("markdown", math_i, { default_priority = 0 })
+
   local autosnippets = {}
 
   for _, snip in ipairs(require("luasnip-latex-snippets/math_wRA_no_backslash")) do
