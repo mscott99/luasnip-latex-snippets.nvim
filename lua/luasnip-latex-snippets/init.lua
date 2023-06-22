@@ -131,7 +131,7 @@ M.setup_markdown = function(autosnippets)
     ls.parser.parse_snippet({ trig = "mk", name = "Math" }, "$${1:${TM_SELECTED_TEXT}}$"),
     ls.parser.parse_snippet(
       { trig = "dm", name = "Block Math" },
-      "$$\n\t${1:${TM_SELECTED_TEXT}}\n.$$"
+      "$$\n\t${1:${TM_SELECTED_TEXT}}\n$$\n$0"
     ),
   }
 
