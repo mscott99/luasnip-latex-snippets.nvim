@@ -18,7 +18,13 @@ vim.list_extend(letter_snippets, {
     trig = ":e",
     priority = 400,
   },
-    {t("\\varepsilon")})
+    {t("\\varepsilon")}),
+  s(
+    {name = "ell",
+    trig = ":l",
+    priority = 400,},
+    {t("\\ell")}
+  )
 })
 
 return letter_snippets
