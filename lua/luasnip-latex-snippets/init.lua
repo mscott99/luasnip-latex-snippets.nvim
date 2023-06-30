@@ -41,8 +41,6 @@ M.setup = function(opts)
 
   ls.add_snippets("tex", math_i, { default_priority = 0 })
 
-  ls.add_snippets("markdown", math_i, { default_priority = 0 })
-
   local autosnippets = {}
 
   for _, snip in ipairs(require("luasnip-latex-snippets/math_wRA_no_backslash")) do
@@ -101,19 +99,123 @@ M.setup = function(opts)
     default_priority = 0,
   })
 
-  M.setup_markdown(autosnippets)
+  M.setup_markdown(opts)
 end
 
+M.setup_markdown = function(opts)
+  local is_math = utils.with_opts(utils.is_math, opts.use_treesitter)
+  local not_math = utils.with_opts(utils.not_math, true)
+
+  ls.config.setup({ enable_autosnippets = true })
+
+  local math_i = require("luasnip-latex-snippets/math_i")
+
+  for _, snip in ipairs(math_i) do
+    snip.condition = pipe({ is_math })
+    snip.show_condition = is_math
+    snip.wordTrig = false
+  end
+
+  ls.add_snippets("markdown", math_i, { default_priority = 0 })
+
+  local autosnippets = {}
+
+  -- Greek Letters with semicolons
+  local short_greek_snippets =   require("luasnip-latex-snippets.short_greek")
+  for _, snip in ipairs(short_greek_snippets) do
+    snip.condition = pipe({ is_math })
+  end
+  ls.add_snippets("markdown", short_greek_snippets,
+    {
+      type = "autosnippets",
+      default_priority = 300,
+    })
+
+  local normal_wA_tex = {
+    ls.parser.parse_snippet({ trig = "mk", name = "Math" }, "$${1:${TM_SELECTED_TEXT}}$"),
+    ls.parser.parse_snippet(
+      { trig = "dm", name = "Block Math" },
+      "$$\n\t${1:${TM_SELECTED_TEXT}}\n$$\n$0"
+    ),
+  }
+
+  for _, snip in ipairs(normal_wA_tex) do
+    snip.condition = pipe({ not_math })
+    table.insert(autosnippets, snip)
+  end
+
+  for _, snip in ipairs(require("luasnip-latex-snippets/math_wRA_no_backslash")) do
+    snip.regTrig = true
+    snip.condition = pipe({ is_math, no_backslash })
+    table.insert(autosnippets, snip)
+  end
+
+  for _, snip in ipairs(require("luasnip-latex-snippets/math_rA_no_backslash")) do
+    snip.wordTrig = false
+    snip.regTrig = true
+    snip.condition = pipe({ is_math, no_backslash })
+    table.insert(autosnippets, snip)
+  end
+
+  -- Not in markdown
+  -- for _, snip in ipairs(require("luasnip-latex-snippets/normal_wA")) do
+  --   snip.condition = pipe({ not_math })
+  --   table.insert(autosnippets, snip)
+  -- end
+
+  for _, snip in ipairs(require("luasnip-latex-snippets/math_wrA")) do
+    snip.regTrig = true
+    snip.condition = pipe({ is_math })
+    table.insert(autosnippets, snip)
+  end
+
+  for _, snip in ipairs(require("luasnip-latex-snippets/math_wA_no_backslash")) do
+    snip.condition = pipe({ is_math, no_backslash })
+    table.insert(autosnippets, snip)
+  end
+
+  for _, snip in ipairs(require("luasnip-latex-snippets/math_iA")) do
+    snip.wordTrig = false
+    snip.condition = pipe({ is_math })
+    table.insert(autosnippets, snip)
+  end
+
+  for _, snip in ipairs(require("luasnip-latex-snippets/math_iA_no_backslash")) do
+    snip.wordTrig = false
+    snip.condition = pipe({ is_math, no_backslash })
+    table.insert(autosnippets, snip)
+  end
+
+  for _, snip in ipairs(require("luasnip-latex-snippets/math_bwA")) do
+    snip.condition = pipe({ conds.line_begin, is_math })
+    table.insert(autosnippets, snip)
+  end
+
+  for _, snip in ipairs(require("luasnip-latex-snippets/bwA")) do
+    snip.condition = pipe({ conds.line_begin, not_math })
+    table.insert(autosnippets, snip)
+  end
+
+  ls.add_snippets("markdown", autosnippets, {
+    type = "autosnippets",
+    default_priority = 0,
+  })
+
+end
+
+--[[
 M.setup_markdown = function(autosnippets)
   local trigger_of_snip = function(s)
     return s.trigger
   end
 
   local normal_wA = vim.tbl_map(trigger_of_snip, require("luasnip-latex-snippets/normal_wA"))
-  local bwa = vim.tbl_map(trigger_of_snip, require("luasnip-latex-snippets/bwA"))
 
-  local to_filter = { bwa, normal_wA }
+  -- local to_filter = { bwa, normal_wA }
+  local to_filter = {normal_wA}
 
+  local is_math = utils.with_opts(utils.is_math, opts.use_treesitter)
+  
   local filtered = vim.tbl_filter(function(s)
     for _, t in pairs(to_filter) do
       for _, v in pairs(t) do
@@ -146,5 +248,5 @@ M.setup_markdown = function(autosnippets)
     default_priority = 0,
   })
 end
-
+]]--
 return M

@@ -16,9 +16,17 @@ local math_wA_no_backslash = {
   ),
 
   ls.parser.parse_snippet(
-    { trig = "abs", name = "absolute value \\abs{}" },
-    "\\abs{${1:${TM_SELECTED_TEXT}}}$0"
+    { trig = "abs", name = "absolute value" },
+    "|${1:${TM_SELECTED_TEXT}}|$0"
   ),
+  
+  ls.parser.parse_snippet(
+    { trig = "braket", name = "inner product" },
+    "\\langle ${1:${TM_SELECTED_TEXT}}\\rangle$0"
+  ),
+  
+  
+  
 }
 
 return math_wA_no_backslash

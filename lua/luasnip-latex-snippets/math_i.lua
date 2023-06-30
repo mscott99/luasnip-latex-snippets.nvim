@@ -18,6 +18,11 @@ local math_i = {
   ),
 
   ls.parser.parse_snippet(
+    { trig = "sup", name = "supremum" },
+    "\\sup_{${1:x} \\in ${2:\\Omega}} "
+  ),
+
+  ls.parser.parse_snippet(
     { trig = "prod", name = "product" },
     "\\prod_{${1:n=${2:1}}}^{${3:\\infty}} ${4:${TM_SELECTED_TEXT}} $0"
   ),

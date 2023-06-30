@@ -114,7 +114,7 @@ local math_iA = {
   with_priority(
     ls.parser.parse_snippet(
       { trig = "dint", name = "integral" },
-      "\\int_{${1:-\\infty}}^{${2:\\infty}} ${3:${TM_SELECTED_TEXT}} $0"
+      "\\int_{${1:-\\infty}}^{${2:\\infty}} ${3:${TM_SELECTED_TEXT}} d${4:x}$0"
     ),
     300
   ),
@@ -127,8 +127,8 @@ local math_iA = {
   ls.parser.parse_snippet({ trig = "=<", name = "implied by" }, "\\impliedby"),
   ls.parser.parse_snippet({ trig = "<<", name = "<<" }, "\\ll"),
 
-  ls.parser.parse_snippet({ trig = "<=", name = "leq" }, "\\le "),
-  ls.parser.parse_snippet({ trig = ">=", name = "geq" }, "\\ge "),
+  ls.parser.parse_snippet({ trig = "leq", name = "leq" }, "\\le "),
+  ls.parser.parse_snippet({ trig = "geq", name = "geq" }, "\\ge "),
   ls.parser.parse_snippet({ trig = "invs", name = "inverse" }, "^{-1}"),
   ls.parser.parse_snippet({ trig = "~~", name = "~" }, "\\sim "),
   ls.parser.parse_snippet({ trig = "conj", name = "conjugate" }, "\\overline{$1}$0"),
