@@ -33,8 +33,11 @@ local math_iA = {
   ls.parser.parse_snippet({ trig = "rd", name = "to the ... power ^{()}" }, "^{($1)}$0 "),
   ls.parser.parse_snippet({ trig = "cb", name = "Cube ^3" }, "^3 "),
   ls.parser.parse_snippet({ trig = "sr", name = "Square ^2" }, "^2"),
-
-  ls.parser.parse_snippet({ trig = "EE", name = "exists" }, "\\exists "),
+  ls.parser.parse_snippet({ trig = "normal", name = "normal" }, "\\mathcal{N}(0, I)"),
+  ls.parser.parse_snippet({ trig = "exists", name = "exists" }, "\\exists "),
+  ls.parser.parse_snippet({ trig = "order", name = "big" }, {t("\\bigO("), i(), t(")")}),
+  ls.parser.parse_snippet({ trig = "EE", name = "expectation" }, "\\mathbb{E} "),
+  ls.parser.parse_snippet({ trig = "any", name = "forall" }, "\\forall "),
   ls.parser.parse_snippet({ trig = "AA", name = "forall" }, "\\forall "),
   ls.parser.parse_snippet({ trig = "xnn", name = "xn" }, "x_{n}"),
   ls.parser.parse_snippet({ trig = "ynn", name = "yn" }, "y_{n}"),
