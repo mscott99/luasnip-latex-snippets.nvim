@@ -1,6 +1,8 @@
 local ls = require("luasnip")
 local s = ls.snippet
 local f = ls.function_node
+local t = ls.text_node
+local i = ls.insert_node
 local with_priority = require("luasnip-latex-snippets.util.utils").with_priority
 
 local math_iA = {
@@ -35,7 +37,7 @@ local math_iA = {
   ls.parser.parse_snippet({ trig = "sr", name = "Square ^2" }, "^2"),
   ls.parser.parse_snippet({ trig = "normal", name = "normal" }, "\\mathcal{N}(0, I)"),
   ls.parser.parse_snippet({ trig = "exists", name = "exists" }, "\\exists "),
-  ls.parser.parse_snippet({ trig = "order", name = "big" }, {t("\\bigO("), i(), t(")")}),
+  -- ls.parser.parse_snippet({ trig = "order", name = "big" }, {t("\\bigO("), i("order"), t(")")}),
   ls.parser.parse_snippet({ trig = "EE", name = "expectation" }, "\\mathbb{E} "),
   ls.parser.parse_snippet({ trig = "any", name = "forall" }, "\\forall "),
   ls.parser.parse_snippet({ trig = "AA", name = "forall" }, "\\forall "),
@@ -51,7 +53,7 @@ local math_iA = {
 
   ls.parser.parse_snippet({ trig = "notin", name = "not in " }, "\\not\\in "),
 
-  ls.parser.parse_snippet({ trig = "cc", name = "subset" }, "\\subset "),
+  ls.parser.parse_snippet({ trig = "cc", name = "subseteq" }, "\\subseteq "),
 
   with_priority(
     ls.parser.parse_snippet({ trig = "<->", name = "leftrightarrow" }, "\\leftrightarrow"),
