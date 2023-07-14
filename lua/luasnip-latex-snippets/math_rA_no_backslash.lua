@@ -10,6 +10,10 @@ local postfix_node = f(function(_, snip)
   return string.format("\\%s", snip.captures[1])
 end, {})
 
+local postfix_node_with_space = f(function(_, snip)
+  return string.format("\\%s ", snip.captures[1])
+end, {})
+
 local build_snippet = function(trig, node, match, priority, name)
   return s({
     name = name and name(match),
@@ -31,9 +35,15 @@ local greek_postfix_completions = function()
   local build = build_with_priority(postfix_trig, postfix_node, 200)
   return vim.tbl_map(build, vim.split(re, "|"))
 end
+local postfix_completions_with_space = function()
+  local re = "circ"
+
+  local build = build_with_priority(postfix_trig, postfix_node_with_space)
+  return vim.tbl_map(build, vim.split(re, "|"))
+end
 
 local postfix_completions = function()
-  local re = "sin|cos|tan|csc|sec|cot|ln|log|exp|star|perp|int|odot|cdot|circ|times|to|field"
+  local re = "sin|cos|tan|csc|sec|cot|ln|log|exp|star|perp|int|odot|cdot|times|to|field"
 
   local build = build_with_priority(postfix_trig, postfix_node)
   return vim.tbl_map(build, vim.split(re, "|"))
@@ -43,6 +53,7 @@ local math_rA_no_backslash = {}
 
 vim.list_extend(math_rA_no_backslash, greek_postfix_completions())
 vim.list_extend(math_rA_no_backslash, postfix_completions())
+vim.list_extend(math_rA_no_backslash, postfix_completions_with_space())
 vim.list_extend(math_rA_no_backslash, { build_snippet(postfix_trig, postfix_node, "q?quad", 200) })
 
 return math_rA_no_backslash

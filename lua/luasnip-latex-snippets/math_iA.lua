@@ -30,7 +30,42 @@ local math_iA = {
       return string.format("\\hat{%s}", snip.captures[1])
     end, {})
   ),
-
+  s(
+    {
+      trig = "(%a)bb",
+      wordTrig = false,
+      regTrig = true,
+      name = "tilde",
+      priority = 100,
+    },
+    f(function(_, snip)
+      return string.format("\\mathbb{%s}", snip.captures[1])
+    end, {})
+  ),
+  s(
+    {
+      trig = "(%a)cal",
+      wordTrig = false,
+      regTrig = true,
+      name = "tilde",
+      priority = 100,
+    },
+    f(function(_, snip)
+      return string.format("\\mathcal{%s}", snip.captures[1])
+    end, {})
+  ),
+  s(
+    {
+      trig = "(%a)tilde",
+      wordTrig = false,
+      regTrig = true,
+      name = "tilde",
+      priority = 100,
+    },
+    f(function(_, snip)
+      return string.format("\\tilde{%s}", snip.captures[1])
+    end, {})
+  ),
   ls.parser.parse_snippet({ trig = "td", name = "to the ... power ^{}" }, "^{$1}$0 "),
   ls.parser.parse_snippet({ trig = "rd", name = "to the ... power ^{()}" }, "^{($1)}$0 "),
   ls.parser.parse_snippet({ trig = "cb", name = "Cube ^3" }, "^3 "),
@@ -82,13 +117,16 @@ local math_iA = {
     { trig = "letw", name = "let omega" },
     "Let $\\Omega \\subset \\C$ be open."
   ),
-  ls.parser.parse_snippet({ trig = "nnn", name = "bigcap" }, "\\bigcap_{${1:i \\in ${2: I}}} $0"),
+  ls.parser.parse_snippet({ trig = "Cap", name = "bigcap" }, "\\bigcap_{${1:i \\in ${2: I}}} $0"),
+  ls.parser.parse_snippet({ trig = "Cup", name = "bigcup" }, "\\bigcup_{${1:i \\in ${2: I}}} $0"),
+  ls.parser.parse_snippet({ trig = "cap", name = "cap" }, "\\cap"),
+  ls.parser.parse_snippet({ trig = "cup", name = "cup" }, "\\cup"),
   ls.parser.parse_snippet({ trig = "norm", name = "norm" }, "\\|$1\\|$0"),
   ls.parser.parse_snippet({ trig = "<>", name = "hokje" }, "\\diamond "),
   ls.parser.parse_snippet({ trig = ">>", name = ">>" }, "\\gg"),
   ls.parser.parse_snippet({ trig = "<<", name = "<<" }, "\\ll"),
 
-  ls.parser.parse_snippet({ trig = "stt", name = "text subscript" }, "_\\text{$1} $0"),
+  -- ls.parser.parse_snippet({ trig = "stt", name = "text subscript" }, "_\\text{$1} $0"),
   ls.parser.parse_snippet({ trig = "tt", name = "text" }, "\\text{$1}$0"),
 
   ls.parser.parse_snippet({ trig = "xx", name = "cross" }, "\\times "),
@@ -104,18 +142,18 @@ local math_iA = {
   ls.parser.parse_snippet({ trig = "RR", name = "R" }, "\\mathbb{R}"),
   ls.parser.parse_snippet({ trig = "QQ", name = "Q" }, "\\mathbb{Q}"),
   ls.parser.parse_snippet({ trig = "ZZ", name = "Z" }, "\\mathbb{Z}"),
-  ls.parser.parse_snippet({ trig = "UU", name = "cup" }, "\\cup "),
+  -- ls.parser.parse_snippet({ trig = "UU", name = "cup" }, "\\cup "),
   ls.parser.parse_snippet({ trig = "NN", name = "n" }, "\\mathbb{N}"),
   ls.parser.parse_snippet({ trig = "||", name = "mid" }, " \\mid "),
-  ls.parser.parse_snippet({ trig = "Nn", name = "cap" }, "\\cap "),
+  -- ls.parser.parse_snippet({ trig = "Nn", name = "cap" }, "\\cap "),
   ls.parser.parse_snippet(
     { trig = "bmat", name = "bmat" },
     "\\begin{bmatrix} $1 \\end{bmatrix} $0"
   ),
-  ls.parser.parse_snippet({ trig = "uuu", name = "bigcup" }, "\\bigcup_{${1:i \\in ${2: I}}} $0"),
-  ls.parser.parse_snippet({ trig = "DD", name = "D" }, "\\mathbb{D}"),
-  ls.parser.parse_snippet({ trig = "HH", name = "H" }, "\\mathbb{H}"),
-  ls.parser.parse_snippet({ trig = "lll", name = "l" }, "\\ell"),
+  -- ls.parser.parse_snippet({ trig = "uuu", name = "bigcup" }, "\\bigcup_{${1:i \\in ${2: I}}} $0"),
+  -- ls.parser.parse_snippet({ trig = "DD", name = "D" }, "\\mathbb{D}"),
+  -- ls.parser.parse_snippet({ trig = "HH", name = "H" }, "\\mathbb{H}"),
+  -- ls.parser.parse_snippet({ trig = "lll", name = "l" }, "\\ell"),
   with_priority(
     ls.parser.parse_snippet(
       { trig = "dint", name = "integral" },
@@ -125,7 +163,7 @@ local math_iA = {
   ),
 
   ls.parser.parse_snippet({ trig = "==", name = "equals" }, [[&= $1 \\\\]]),
-  ls.parser.parse_snippet({ trig = "!=", name = "not equals" }, "\\neq "),
+  ls.parser.parse_snippet({ trig = "neq", name = "not equals" }, "\\neq "),
   ls.parser.parse_snippet({ trig = "compl", name = "complement" }, "^{c}"),
   ls.parser.parse_snippet({ trig = "__", name = "subscript" }, "_{$1}$0"),
   ls.parser.parse_snippet({ trig = "=>", name = "implies" }, "\\implies"),
