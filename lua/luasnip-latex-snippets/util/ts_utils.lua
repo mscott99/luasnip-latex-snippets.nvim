@@ -49,8 +49,7 @@ function M.in_text(check_parent)
   return true
 end
 
-local in_mathzone
-local function check_in_mathzone()
+function M.in_mathzone()
   local node = get_node_at_cursor()
   while node do
     if node:type() == "text_mode" then
@@ -61,15 +60,6 @@ local function check_in_mathzone()
     node = node:parent()
   end
   return false
-end
-
-vim.api.nvim_buf_attach(0, false, {on_lines = function(...)
-  in_mathzone = check_in_mathzone()
-end})
-
-
-function M.in_mathzone()
-  return in_mathzone
 end
 
 return M
