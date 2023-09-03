@@ -121,15 +121,14 @@ M.setup_markdown = function(opts)
   local autosnippets = {}
 
   -- Greek Letters with semicolons
-  local short_greek_snippets =   require("luasnip-latex-snippets.short_greek")
+  local short_greek_snippets = require("luasnip-latex-snippets.short_greek")
   for _, snip in ipairs(short_greek_snippets) do
     snip.condition = pipe({ is_math })
   end
-  ls.add_snippets("markdown", short_greek_snippets,
-    {
-      type = "autosnippets",
-      default_priority = 300,
-    })
+  ls.add_snippets("markdown", short_greek_snippets, {
+    type = "autosnippets",
+    default_priority = 300,
+  })
 
   local normal_wA_tex = {
     ls.parser.parse_snippet({ trig = "mk", name = "Math" }, "$${1:${TM_SELECTED_TEXT}} $"),
@@ -200,7 +199,6 @@ M.setup_markdown = function(opts)
     type = "autosnippets",
     default_priority = 0,
   })
-
 end
 
 --[[
@@ -248,5 +246,6 @@ M.setup_markdown = function(autosnippets)
     default_priority = 0,
   })
 end
-]]--
+]]
+--
 return M
